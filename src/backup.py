@@ -18,7 +18,10 @@ def main():
     parser.add_option("-s", "--size", dest="size", help="Especifica el tamano en MB en el que se dividiran los archivos", metavar="TAMANO")
 
     (options, args) = parser.parse_args()
-    
+    if  not os.path.isfile("/usr/bin/dar") :
+        print "La utilidad dar no esta instalada. Intente instalarla mediante apt-get"
+        sys.exit(1)
+        
     if len(args) <= 1:
         parser.error("Numero de argumentos incorrectos")
         

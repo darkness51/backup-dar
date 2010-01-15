@@ -86,15 +86,15 @@ class backupDar (object):
                 sys.exit(1)
             
             if self._options.diferencial:
-                print self.getDiferencialBackupInstruction()
+                self.backupInstruction = self.getDiferencialBackupInstruction()
                 
             if self._options.incremental:
-                print self.getIncrementalBackupInstruction()
+                self.backupInstruction =  self.getIncrementalBackupInstruction()
                 
             if self._options.completo:
-                print self.getCompleteBackupInstruction()
+                self.backupInstruction = self.getCompleteBackupInstruction()
             
-            subprocess.call("", shell=True)
+            subprocess.call(self.backupInstruction, shell=True)
     
     def getDiferencialBackupInstruction (self):
         return "dar -c "+self._destinationDirectory + self._options.filename +" -R "+ self._originDirectory +" -s "+self._options.size+" -D -y"+self._options.compresion+" -Z \"*.gz\" -Z \"*.zip\" -A "+self._options.recFile
