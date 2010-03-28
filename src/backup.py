@@ -7,7 +7,7 @@ from optparse import OptionParser
 def main():
     usage = "Usage: %prog [options] origin_directory dest_directory"
     parser = OptionParser(usage)
-    parser.add_option("-f", "--file", dest="filename", help="Ruta completa del archivo de backup", metavar="BKFILE")
+    parser.add_option("-f", "--file", dest="filename", help="Nombre del archivo de backup", metavar="BKFILE")
     parser.add_option("-c", "--compresion", dest="compresion", help="Fija el nivel de compresion, default 1, max 9", default=9, metavar="NIVEL")
     parser.add_option("-v", "--verbose", action="store_true", dest="verbose", default=False)
     parser.add_option("-e", "--exclude", dest="excluir", help="Excluye el archivo o directorio dado", metavar="FILE")
@@ -16,6 +16,7 @@ def main():
     parser.add_option("-C", "--complete", action="store_true", dest="completo", help="Especifica si el tipo de backup sera completo", default=False)
     parser.add_option("-r", "--resource", dest="recFile", help="Especifica el archivo de backup completo", metavar="FILE")
     parser.add_option("-s", "--size", dest="size", help="Especifica el tamano en MB en el que se dividiran los archivos", metavar="TAMANO")
+    parser.add_option("-x",  "--extract",  action="store_true",  dest="extract",  help="Especifica  si se extraera el backup")
 
     (options, args) = parser.parse_args()
     if  not os.path.isfile("/usr/bin/dar") :

@@ -28,6 +28,7 @@ class backupDar (object):
             options.completo = Especifica si se hara un backup completo
             options.recDir = Especifica el directorio al que se le hara backup
             options.size = Especifica el tamaño de los archivos en los que se dividira el backup
+	    options.extract = Especifica si lo que se desea hacer es extraer los archivos del backup
         """
         
         # Opciones básicas sobre el backup
@@ -93,6 +94,9 @@ class backupDar (object):
                 
             if self._options.completo:
                 self.backupInstruction = self.getCompleteBackupInstruction()
+		
+	    if self._options.extract:
+		self.backupInstruction = self.getExtractBackupInstruction()
             
             subprocess.call(self.backupInstruction, shell=True)
     
@@ -104,4 +108,6 @@ class backupDar (object):
     
     def getIncrementalBackupInstruction (self):
         return "dar -c "+self._destinationDirectory + self._options.filename +" -R "+ self._originDirectory +" -s "+self._options.size+" -D -y"+self._options.compresion+" -Z \"*.gz\" -Z \"*.zip\" -A "+self._options.recFile
-         
+
+    def getExtractBackupInstruction (self):
+        return "dar -x "+self._originDirectory + self._options.filename + " -R "+self._destinationDirectory 
