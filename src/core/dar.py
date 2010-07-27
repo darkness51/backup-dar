@@ -8,6 +8,8 @@
 import logging
 import os, sys, smtplib
 from datetime import date
+from email.MIMEText import MIMEText
+from email.Encoders import encode_base64
 
 # Loggers de alto nivel
 logger = logging.getLogger("BackupDar")
@@ -120,13 +122,18 @@ class backupDar (object):
         mailServer = "localhost"
         mailServerPort = 25
         originateAddress = "backup@textufil.com"
+        originatePassword = "backup"
         
-        from_header = 'From: %s\r\n' % originateAddress
-        to_header = 'To: %s\r\n\r\n' % serverAdmin
-        subject_header = 'Subject: Resultado del Backup'
-        body = mensaje
         
-        email_message = '%s\n%s\n%s\n\n%s' % (from_header, to_header, subject_header, body)
+        email_message = MIMEText(mensaje)
+        email_message["From"] = originateAddress
+        email_message["To"] = serverAdmin
+        email_message["Subject"] = "Resultado del Backup"
         
         s = smtplib.SMTP(mailServer, mailServerPort)
-        s.sendmail(originateAddress, serverAdmin, email_message)
+        s.ehlo()
+        s.starttls()
+        print s.ehlo()
+        s.login(originateAddress, originatePassword)
+        s.sendmail(originateAddress, serverAdmin, email_message.as_string())
+        s.close()
