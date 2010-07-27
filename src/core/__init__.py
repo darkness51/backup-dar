@@ -1,1 +1,3 @@
-from backup import *
+#!/usr/bin/env python
+
+__all__ = []
