@@ -17,7 +17,7 @@ def main():
     parser.add_option("-r", "--resource", dest="recFile", help="Especifica el archivo de backup completo", metavar="FILE")
     parser.add_option("-s", "--size", dest="size", help="Especifica el tamano en MB en el que se dividiran los archivos", metavar="TAMANO")
     parser.add_option("-x",  "--extract",  action="store_true",  dest="extract",  help="Especifica  si se extraera el backup")
-    parser.add_option("-P", "--prune", action="append", dest="excluidos", help="Especifica los archivos o carpetas que no se incluiran en el backup")
+    parser.add_option("-P", "--prune", action="append", dest="excluidos", default=None, help="Especifica los archivos o carpetas que no se incluiran en el backup")
 
     (options, args) = parser.parse_args()
     if  not os.path.isfile("/usr/bin/dar") :

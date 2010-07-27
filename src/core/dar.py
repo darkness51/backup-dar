@@ -88,7 +88,7 @@ class backupDar (object):
                 logger.error("Solo se puede definir la opcion -r si se utiliza backup diferencial o incremental")
                 sys.exit(1)
             
-            self.getBackupInstruction()
+            self.backupInstruction = self.getBackupInstruction()
             salida = os.popen(self.backupInstruction).read()
             self.sendMail(salida)
     
@@ -98,21 +98,22 @@ class backupDar (object):
         '''
         cadenaBackup = "dar "
         if not self._options.extract:
-            cadenaBackup += "-c " + self._destinationDirectory + self._options.filename + "-R " + self._originDirectory + " -s " + self._options.size + " -D -y" + str(self._options.compresion)
+            cadenaBackup += "-c " + self._destinationDirectory + self.filename + " -R " + self._originDirectory + " -s " + self._options.size + " -D -y" + str(self._options.compresion)
         
         if len(self._options.excluir_compresion ) > 0:
             for exc in self._options.excluir_compresion:
                 cadenaBackup += " -Z " + "\""+ exc + "\""
                 
-        if len(self._options.excluidos) > 0:
-            for excluido in self._options.excluidos:
-                cadenaBackup += " -P " + excluido
+        if self._options.excluidos != None:
+            if len(self._options.excluidos) > 0:
+                for excluido in self._options.excluidos:
+                    cadenaBackup += " -P " + excluido
                 
         if self._options.diferencial:
             if self._options.recFile != None:
                 cadenaBackup += " -A " + self._options.recFile
                 
-        logger.info(cadenaBackup)
+        return cadenaBackup
         
     def sendMail(self, mensaje):
         serverAdmin = "caguilar@textufil.com"

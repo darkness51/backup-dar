@@ -8,7 +8,7 @@ setup(name="Backup DAR",
       author="Carlos Aguilar",
       author_email="caguilar@dwdandsolutions.com",
       url="http://www.dwdandsolutions.com/html/descargas/utilidades/backup.zip",
-      licence="GPL",
+      license="GPL",
       scripts=["backup.py"],
       packages=["core"]
 )
