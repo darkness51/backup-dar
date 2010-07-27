@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, sys, pprint
-from core.backup import backupDar
+import os, sys
+from core.dar import backupDar
 from optparse import OptionParser
 
 def main():
@@ -22,7 +22,7 @@ def main():
     (options, args) = parser.parse_args()
     if  not os.path.isfile("/usr/bin/dar") :
         print "La utilidad dar no esta instalada. Intente instalarla mediante apt-get"
-        #sys.exit(1)
+        sys.exit(1)
         
     if len(args) <= 1:
         parser.error("Numero de argumentos incorrectos")
