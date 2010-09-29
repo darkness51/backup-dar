@@ -20,7 +20,7 @@ def main():
     parser.add_option("-P", "--prune", action="append", dest="excluidos", default=None, help="Especifica los archivos o carpetas que no se incluiran en el backup")
 
     (options, args) = parser.parse_args()
-    if  not os.path.isfile("/usr/bin/dar") :
+    if  not os.path.isfile("/usr/bin/dar"):
         print "La utilidad dar no esta instalada. Intente instalarla mediante apt-get"
         sys.exit(1)
         
