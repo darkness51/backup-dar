@@ -50,86 +50,86 @@ class backupDar (object):
         # Agregamos al Console Handler al logger
         logger.addHandler(ch)
         
-    def run(self):
-        self._runDar()
-        
-    def _runDar(self):
-        """
-        La ejecución de dar se hara aqui de acuerdo a las opciones que se le pasen"
-        """
-        if (self._options.diferencial == True and self._options.completo == True):
-            logger.critical("El backup solo puede ser incremental, diferencial o completo!")
-        else:
-            #TODO: Se agregua la fecla al nombre del archivo
-            today = date.today()
-            self.filename = self._options.filename + "_" + str(today)
-            
-            file = self.filename.split(".")
-
-            if len(file) > 1:
-                logger.error('Debe eliminar la extension: %s del nombre del archivo', file[1])
-                sys.exit(1)
-                
-            if not os.path.isdir(self._originDirectory) and not os.path.exists(self._originDirectory):
-                logger.error("La ruta de origen debe de ser un directorio")
-                sys.exit(1)
-            
-            if not os.path.isdir(self._destinationDirectory) and not os.path.exists(self._destinationDirectory):
-                logger.error("La ruta de destino debe de ser un directorio, compruebe que el directorio exista")
-                sys.exit(1)
-                
-            if os.path.exists(self._options.filename):
-                logger.critical("El archivo " + self.filename +" ya existe")
-                sys.exit(1)
-                
-            if self._options.recFile and self._options.completo:
-                logger.error("Solo se puede definir la opcion -r si se utiliza backup diferencial o incremental")
-                sys.exit(1)
-            
-            self.backupInstruction = self.getBackupInstruction()
-            salida = os.popen(self.backupInstruction).read()
-            self.sendMail(salida)
-    
-    def getBackupInstruction(self):
-        '''
-        Funcion que genera la instruccion para realizar el backup dependiendo de las opciones utilizadas en la linea de comandos
-        '''
-        cadenaBackup = "dar "
-        if not self._options.extract:
-            cadenaBackup += "-c " + self._destinationDirectory + self.filename + " -R " + self._originDirectory + " -s " + self._options.size + " -D -y" + str(self._options.compresion)
-        
-        if len(self._options.excluir_compresion ) > 0:
-            for exc in self._options.excluir_compresion:
-                cadenaBackup += " -Z " + "\""+ exc + "\""
-                
-        if self._options.excluidos != None:
-            if len(self._options.excluidos) > 0:
-                for excluido in self._options.excluidos:
-                    cadenaBackup += " -P " + excluido
-                
-        if self._options.diferencial:
-            if self._options.recFile != None:
-                cadenaBackup += " -A " + self._options.recFile
-                
-        return cadenaBackup
-        
-    def sendMail(self, mensaje):
-        serverAdmin = "caguilar@textufil.com"
-        mailServer = "localhost"
-        mailServerPort = 25
-        originateAddress = "backup@textufil.com"
-        originatePassword = "backup"
-        
-        
-        email_message = MIMEText(mensaje)
-        email_message["From"] = originateAddress
-        email_message["To"] = serverAdmin
-        email_message["Subject"] = "Resultado del Backup"
-        
-        s = smtplib.SMTP(mailServer, mailServerPort)
-        s.ehlo()
-        s.starttls()
-        print s.ehlo()
-        s.login(originateAddress, originatePassword)
-        s.sendmail(originateAddress, serverAdmin, email_message.as_string())
-        s.close()
+#    def run(self):
+#        self._runDar()
+#        
+#    def _runDar(self):
+#        """
+#        La ejecución de dar se hara aqui de acuerdo a las opciones que se le pasen"
+#        """
+#        if (self._options.diferencial == True and self._options.completo == True):
+#            logger.critical("El backup solo puede ser incremental, diferencial o completo!")
+#        else:
+#            #TODO: Se agregua la fecla al nombre del archivo
+#            today = date.today()
+#            self.filename = self._options.filename + "_" + str(today)
+#            
+#            file = self.filename.split(".")
+#
+#            if len(file) > 1:
+#                logger.error('Debe eliminar la extension: %s del nombre del archivo', file[1])
+#                sys.exit(1)
+#                
+#            if not os.path.isdir(self._originDirectory) and not os.path.exists(self._originDirectory):
+#                logger.error("La ruta de origen debe de ser un directorio")
+#                sys.exit(1)
+#            
+#            if not os.path.isdir(self._destinationDirectory) and not os.path.exists(self._destinationDirectory):
+#                logger.error("La ruta de destino debe de ser un directorio, compruebe que el directorio exista")
+#                sys.exit(1)
+#                
+#            if os.path.exists(self._options.filename):
+#                logger.critical("El archivo " + self.filename +" ya existe")
+#                sys.exit(1)
+#                
+#            if self._options.recFile and self._options.completo:
+#                logger.error("Solo se puede definir la opcion -r si se utiliza backup diferencial o incremental")
+#                sys.exit(1)
+#            
+#            self.backupInstruction = self.getBackupInstruction()
+#            salida = os.popen(self.backupInstruction).read()
+#            self.sendMail(salida)
+#    
+#    def getBackupInstruction(self):
+#        '''
+#        Funcion que genera la instruccion para realizar el backup dependiendo de las opciones utilizadas en la linea de comandos
+#        '''
+#        cadenaBackup = "dar "
+#        if not self._options.extract:
+#            cadenaBackup += "-c " + self._destinationDirectory + self.filename + " -R " + self._originDirectory + " -s " + self._options.size + " -D -y" + str(self._options.compresion)
+#        
+#        if len(self._options.excluir_compresion ) > 0:
+#            for exc in self._options.excluir_compresion:
+#                cadenaBackup += " -Z " + "\""+ exc + "\""
+#                
+#        if self._options.excluidos != None:
+#            if len(self._options.excluidos) > 0:
+#                for excluido in self._options.excluidos:
+#                    cadenaBackup += " -P " + excluido
+#                
+#        if self._options.diferencial:
+#            if self._options.recFile != None:
+#                cadenaBackup += " -A " + self._options.recFile
+#                
+#        return cadenaBackup
+#        
+#    def sendMail(self, mensaje):
+#        serverAdmin = "caguilar@textufil.com"
+#        mailServer = "localhost"
+#        mailServerPort = 25
+#        originateAddress = "backup@textufil.com"
+#        originatePassword = "backup"
+#        
+#        
+#        email_message = MIMEText(mensaje)
+#        email_message["From"] = originateAddress
+#        email_message["To"] = serverAdmin
+#        email_message["Subject"] = "Resultado del Backup"
+#        
+#        s = smtplib.SMTP(mailServer, mailServerPort)
+#        s.ehlo()
+#        s.starttls()
+#        print s.ehlo()
+#        s.login(originateAddress, originatePassword)
+#        s.sendmail(originateAddress, serverAdmin, email_message.as_string())
+#        s.close()
