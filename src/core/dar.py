@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# backup - un front end en linea de comandos para dar
-#
-# Copyright (c) 2009 Carlos Aguilar <caguilar@dwdandsolutions.com>
-
 import logging
 import os, sys, smtplib
 from datetime import date
@@ -16,7 +12,7 @@ logger = logging.getLogger("BackupDar")
 
 class backupDar (object):
     def __init__(self, options, args):
-        """
+        '''
         Crea una nueva clase que se encarga de todas las tareas que realiza dar
         desde crear backups hasta restaurarlos.
         Las opciones son facilmente capturadas por optparse.
@@ -31,7 +27,7 @@ class backupDar (object):
             options.recDir = Especifica el directorio al que se le hara backup
             options.size = Especifica el tamaño de los archivos en los que se dividira el backup
 	    options.extract = Especifica si lo que se desea hacer es extraer los archivos del backup
-        """
+        '''
         
         # Opciones básicas sobre el backup
         self._options = options
