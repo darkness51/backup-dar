@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
+
 # backup - un front end en linea de comandos para dar
 #
 # Copyright (c) 2009 Carlos Aguilar <caguilar@dwdandsolutions.com>
