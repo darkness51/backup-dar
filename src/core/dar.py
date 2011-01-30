@@ -26,6 +26,10 @@ class backupDar(object):
         options.recDir = Especifica el directorio al que se le hara backup
         options.size = Especifica el tamaño de los archivos en los que se dividira el backup
         options.extract = Especifica si lo que se desea hacer es extraer los archivos del backup
+        options.server_admin_email = Especifica la direccion de correo a la que se enviara el resultado del backup
+        options.server = Especifica el servidor que se usara para enviar el correo
+        options.originate_address = Especifica la direccion de correo que se usara por el script
+        options.originate_password = Especifica la clave de la direccion de correo que se usara por el script
         '''
         # Opciones básicas sobre el backup
         self._options = options
@@ -110,11 +114,11 @@ class backupDar(object):
         return cadenaBackup
     
     def sendMail(self, mensaje):
-        serverAdmin = "caguilar@textufil.com"
-        mailServer = "localhost"
+        serverAdmin = self._options.server_admin_email
+        mailServer = self._options.server
         mailServerPort = 25
-        originateAddress = "backup@textufil.com"
-        originatePassword = "backup"
+        originateAddress = self.originate_address
+        originatePassword = self.originate_password
         
         email_message = MIMEText(mensaje)
         email_message["From"] = originateAddress

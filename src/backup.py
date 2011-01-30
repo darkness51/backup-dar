@@ -18,6 +18,10 @@ def main():
     parser.add_option("-s", "--size", dest="size", help="Especifica el tamano en MB en el que se dividiran los archivos", metavar="TAMANO")
     parser.add_option("-x",  "--extract",  action="store_true",  dest="extract",  help="Especifica  si se extraera el backup")
     parser.add_option("-P", "--prune", action="append", dest="excluidos", default=None, help="Especifica los archivos o carpetas que no se incluiran en el backup")
+    parser.add_option("-se", "--server-admin", dest="server_admin_email", help="Nombre del administrador del sistema o sea, la persona que recibira el correo", metavar="SYSADMIN")
+    parser.add_option("-s", "--server", dest="server", help="Servidor de correos a usar", metavar="SERVER")
+    parser.add_option("-oa", "--originate-address", dest="originate_address", help="Correo que usara el script para enviar el resultado", metavar="EMAIL")
+    parser.add_option("-op", "--originate-password", dest="originate_password", help="Password del correo que usara el script", metavar="PASSWORD")
 
     (options, args) = parser.parse_args()
     if  not os.path.isfile("/usr/bin/dar"):
