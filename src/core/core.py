@@ -5,8 +5,6 @@ import logging
 import os, sys, smtplib
 from datetime import date
 from email.MIMEText import MIMEText
-#from email.Encoders import encode_base64
 
 # Loggers de alto nivel
 logger = logging.getLogger("BackupDar")
-
