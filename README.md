@@ -6,8 +6,8 @@ Wrapper en python para la utilidad de backup dar.
 Este wrapper lo utilizo para programar copias de respaldo encriptadas por medio de cron y que me envíe el resultado por e-mail.
 
 Algunas cosas a agregar son las siguiente:
-- Opcion para pasar el correo y password que usara para enviar el correo de notificación.
-- Opcion para  decidir a que correo se enviará la notificación.
+ - Opcion para pasar el correo y password que usara para enviar el correo de notificación.
+ - Opcion para  decidir a que correo se enviará la notificación.
 
 
 ##Licencia
