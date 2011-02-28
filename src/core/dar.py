@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import os, sys, smtplib
+import os
+import sys
+import smtplib
+from subprocess import Popen, PIPE
 from datetime import date
 from email.MIMEText import MIMEText
 
@@ -87,7 +90,11 @@ class backupDar(object):
                 sys.exit(1)
                 
             self.backupInstruction = self.getBackupInstruction()
-            salida = os.popen(self.backupInstruction).read()
+            #salida = os.popen(self.backupInstruction).read()
+            backup = Popen(self.backupInstruction, stdout=PIPE, shell=True)
+            (salida, errores) = backup.communicate() 
+            if errores is not None:
+                salida += " \n\nSe produjeron los siguientes errores:\n\n %s" % errores
             self.sendMail(salida)
             
     def getBackupInstruction(self):

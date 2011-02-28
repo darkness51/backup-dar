@@ -4,6 +4,7 @@
 import os, sys
 from core.dar import backupDar
 from optparse import OptionParser
+from subprocess import Popen, PIPE
 
 def main():
     usage = "Usage: %prog [options] origin_directory dest_directory"
